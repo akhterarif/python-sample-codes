@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 import csv
 import pandas as pd
+import errno
 
 import os
 import urllib
@@ -23,6 +24,7 @@ with open(csv_file_name, 'w') as f:
     f.write(image_data_header)
 
 for link in df['name']:
+
     i = i + 1
     file_name = "image_{time}_{i}.jpg".format(time=time, i=i)
     print(file_name + " Downloading...")
@@ -52,9 +54,9 @@ for link in df['name']:
     splitted_image_link_str_list = image_link_str.split('/')
     splitted_image_link_str_list[-1] = resolution + ext
     res_image_url_str = '/'.join(splitted_image_link_str_list)
-    image_file = urllib.request.urlretrieve(
-        res_image_url_str, os.path.basename(file_name))
 
+    image_file = urllib.request.urlretrieve(
+        res_image_url_str,  os.path.basename(file_name))
     with open(csv_file_name, 'a+') as f:
         f.write(img_data)
 
